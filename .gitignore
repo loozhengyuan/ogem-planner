@@ -94,3 +94,8 @@ ENV/
 # Rope project settings
 .ropeproject
 
+# Project-specific settings
+.vscode/*
+credentials.py
+config.ini
+*.csv
