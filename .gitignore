@@ -95,7 +95,11 @@ ENV/
 .ropeproject
 
 # Project-specific settings
+.vscode
 .vscode/*
 credentials.py
 config.ini
 *.csv
+db.sqlite3
+core/settings/production.py
+core/settings/development.py
