@@ -1,0 +1,101 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Roboto">
+<style>
+    .header-image {
+        background-image: url("https://images.unsplash.com/photo-1506606401543-2e73709cebb4?ixlib=rb-0.3.5&s=f39ed3f2a0d29246044b36acdd254460&auto=format&fit=crop&w=1350&q=80");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: rgba(0, 0, 0, 0);
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="hero is-primary is-medium header-image">
+    <!-- Hero content: will be in the middle -->
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="columns is-mobile is-centered">
+                <div class="column is-half">
+                    <form action="{% url 'results' %}" method="POST">
+                        {% csrf_token %}
+                        <h1 class="title is-1" style="font-family: 'Montserrat', sans-serif;">
+                            I want to clear..
+                        </h1>
+                        <div class="field has-addons">
+                            <p class="control is-expanded">
+                                <input class="input is-medium" id="courses" name="courses" placeholder="Enter NBS Course Codes"
+                                    style="font-family: 'Roboto', sans-serif;" value="AB1202, AB3601">
+                            </p>
+                            <p class="control">
+                                <button type="submit" class="button is-info is-medium" style="font-family: 'Roboto', sans-serif;">
+                                    Search
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h1>List of Universities:</h1>
+        <table class="table is-narrow is-striped">
+            <thead>
+                <tr>
+                    <th><abbr title="Host University">Host Uni</abbr></th>
+                    <th><abbr title="NTU Course Code">NTU Course</abbr></th>
+                    <th><abbr title="NTU Course Title">NTU Title</abbr></th>
+                    <th><abbr title="Host Course Code">Host Course</abbr></th>
+                    <th><abbr title="Host Course Title">Host Title</abbr></th>
+                    <th><abbr title="Sem Last Offered">SLO</abbr></th>
+                    <th><abbr title="Status">Status</abbr></th>
+                    <th><abbr title="Last Updated">LU</abbr></th>
+                    <th><abbr title="Validity">Validity</abbr></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for university in universities %}
+                <tr>
+                    <td>{{ university.host_uni }}</td>
+                    <td>{{ university.ntu_course_code }}</td>
+                    <td>{{ university.ntu_course_title }}</td>
+                    <td>{{ university.host_course_code }}</td>
+                    <td>{{ university.host_course_title }}</td>
+                    <td>{{ university.sem_last_offered }}</td>
+                    <td>{{ university.status}}</td>
+                    <td>{{ university.last_updated }}</td>
+                    <td>{{ university.total_clearable }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+</tbale>
+{% endblock %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://1865916011.rsc.cdn77.org/bulma-tags.js"></script>
+<script>
+    $(document).ready(function () {
+        // Check for click events on the navbar burger icon
+        $(".navbar-burger").click(function () {
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            $(".navbar-burger").toggleClass("is-active");
+            $(".navbar-menu").toggleClass("is-active");
+
+        });
+    });
+</script>
+{% endblock %}
