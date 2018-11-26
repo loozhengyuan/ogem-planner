@@ -63,17 +63,17 @@
                 </tr>
             </thead>
             <tbody>
-                {% for university in universities %}
+                {% for match in matches %}
                 <tr>
-                    <td>{{ university.host_uni }}</td>
-                    <td>{{ university.ntu_course_code }}</td>
-                    <td>{{ university.ntu_course_title }}</td>
-                    <td>{{ university.host_course_code }}</td>
-                    <td>{{ university.host_course_title }}</td>
-                    <td>{{ university.sem_last_offered }}</td>
-                    <td>{{ university.status}}</td>
-                    <td>{{ university.last_updated }}</td>
-                    <td>{{ university.total_clearable }}</td>
+                    <td>{{ match.host_uni.name }}</td>
+                    <td>{{ match.ntu_course.code }}</td>
+                    <td>{{ match.ntu_course.title }}</td>
+                    <td>{{ match.host_course.code }}</td>
+                    <td>{{ match.host_course.title }}</td>
+                    <td>{{ match.sem_last_offered }}</td>
+                    <td>{{ match.status}}</td>
+                    <td>{{ match.last_updated }}</td>
+                    <td>{{ match.total_clearable }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
