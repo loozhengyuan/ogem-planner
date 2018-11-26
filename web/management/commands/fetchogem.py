@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from requests_ntlm import HttpNtlmAuth
 from django.core.management.base import BaseCommand, CommandError
-from web.models import Entries
+from web.models import HostUni, HostCourse, NTUCourse, CourseMatch, Entries
 
 
 class Command(BaseCommand):
@@ -17,6 +17,7 @@ class Command(BaseCommand):
         username = options['username'][0]
         password = options['password'][0]
 
+        masterlist = []
         dblist = []
         auth = HttpNtlmAuth(username, password)
         url = 'http://web.nbs.ntu.edu.sg/undergrad/intranet/StdExchange/gem_explorer/Approve_Course.asp'
@@ -59,7 +60,8 @@ class Command(BaseCommand):
                     rowentry = []
                     for data in row.findAll('td'):
                         rowentry.append(data.text)
-
+                    masterlist.append(rowentry)
+                    
                     # Format rowentry for database import [DEPRECATED!]
                     dblist.append(Entries(
                         host_uni=rowentry[0],
@@ -94,4 +96,33 @@ class Command(BaseCommand):
                 raise CommandError('Failed to write scraped data to database!')
         except:
             raise CommandError('Failed to access database!')
-        
+
+        # Export to Database
+        try:
+            total_rows = CourseMatch.objects.all().count()
+            HostUni.objects.all().delete()
+            NTUCourse.objects.all().delete()
+            HostCourse.objects.all().delete()
+            CourseMatch.objects.all().delete()
+            self.stdout.write(self.style.SUCCESS("{total_rows} rows of existing data has been purged".format(total_rows=total_rows)))
+            try:
+                for entry in masterlist:
+                    host_uni, created = HostUni.objects.get_or_create(name=entry[0])
+                    ntu_course, created = NTUCourse.objects.get_or_create(code=entry[1], title=entry[2])
+                    host_course, created = HostCourse.objects.get_or_create(code=entry[3], title=entry[4])
+                    course_match = CourseMatch.objects.create(
+                        host_uni=host_uni,
+                        ntu_course=ntu_course,
+                        host_course=host_course,
+                        sem_last_offered=entry[5],
+                        status=entry[6],
+                        last_updated=entry[7],
+                        validity=entry[8],
+                    )
+                    course_match.save()
+                total_rows = CourseMatch.objects.all().count()
+                self.stdout.write(self.style.SUCCESS("{total_rows} rows of new data were successfully written to database".format(total_rows=total_rows)))
+            except:
+                raise CommandError('Failed to write scraped data to database!')
+        except:
+            raise CommandError('Failed to access database!')
