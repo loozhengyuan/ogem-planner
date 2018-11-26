@@ -50,29 +50,19 @@
         <table class="table is-narrow is-striped">
             <thead>
                 <tr>
+                        <th><abbr title="Rank">Rank</abbr></th>
                     <th><abbr title="Host University">Host Uni</abbr></th>
-                    <th><abbr title="NTU Course Code">NTU Course</abbr></th>
-                    <th><abbr title="NTU Course Title">NTU Title</abbr></th>
-                    <th><abbr title="Host Course Code">Host Course</abbr></th>
-                    <th><abbr title="Host Course Title">Host Title</abbr></th>
-                    <th><abbr title="Sem Last Offered">SLO</abbr></th>
-                    <th><abbr title="Status">Status</abbr></th>
-                    <th><abbr title="Last Updated">LU</abbr></th>
-                    <th><abbr title="Validity">Validity</abbr></th>
+                        <th><abbr title="Total Clearable">Total Matches</abbr></th>
+                        <th><abbr title="Additional Info">Info</abbr></th>
                 </tr>
             </thead>
             <tbody>
-                {% for match in matches %}
+                    {% for uni in universities %}
                 <tr>
-                    <td>{{ match.host_uni.name }}</td>
-                    <td>{{ match.ntu_course.code }}</td>
-                    <td>{{ match.ntu_course.title }}</td>
-                    <td>{{ match.host_course.code }}</td>
-                    <td>{{ match.host_course.title }}</td>
-                    <td>{{ match.sem_last_offered }}</td>
-                    <td>{{ match.status}}</td>
-                    <td>{{ match.last_updated }}</td>
-                    <td>{{ match.total_clearable }}</td>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ uni.name }}</td>
+                        <td>{{ uni.total_clearable }}</td>
+                        <td><a href="{% url 'hostuni' uni.id %}">Link</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
