@@ -104,3 +104,4 @@ db.sqlite3
 core/settings/production.py
 core/settings/development.py
 web/migrations/*
+.DS_Store
