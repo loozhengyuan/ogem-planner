@@ -60,7 +60,7 @@ class Command(BaseCommand):
                     for data in row.findAll('td'):
                         rowentry.append(data.text)
 
-                    # Format rowentry for database import
+                    # Format rowentry for database import [DEPRECATED!]
                     dblist.append(Entries(
                         host_uni=rowentry[0],
                         ntu_course_code=rowentry[1],
@@ -81,7 +81,7 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS("Successfully finished scraping all pages"))
                 break
 
-        # Export to Database
+        # Export to Database [DEPRECATED!]
         try:
             total_rows = Entries.objects.all().count()
             Entries.objects.all().delete()
