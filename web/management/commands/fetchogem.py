@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from requests_ntlm import HttpNtlmAuth
 from django.core.management.base import BaseCommand, CommandError
-from web.models import HostUni, HostCourse, NTUCourse, CourseMatch, Entries
+from web.models import HostUni, HostCourse, NTUCourse, CourseMatch
 
 
 class Command(BaseCommand):
@@ -18,7 +18,6 @@ class Command(BaseCommand):
         password = options['password'][0]
 
         masterlist = []
-        dblist = []
         auth = HttpNtlmAuth(username, password)
         url = 'http://web.nbs.ntu.edu.sg/undergrad/intranet/StdExchange/gem_explorer/Approve_Course.asp'
         headers = {
@@ -61,19 +60,6 @@ class Command(BaseCommand):
                     for data in row.findAll('td'):
                         rowentry.append(data.text)
                     masterlist.append(rowentry)
-                    
-                    # Format rowentry for database import [DEPRECATED!]
-                    dblist.append(Entries(
-                        host_uni=rowentry[0],
-                        ntu_course_code=rowentry[1],
-                        ntu_course_title=rowentry[2],
-                        host_course_code=rowentry[3],
-                        host_course_title=rowentry[4],
-                        sem_last_offered=rowentry[5],
-                        status=rowentry[6],
-                        last_updated=rowentry[7],
-                        validity=rowentry[8],
-                    ))
 
             # Increasing page param for next loop
             payload['page'] = str(int(current_page) + 1)
@@ -82,20 +68,6 @@ class Command(BaseCommand):
             if current_page == maximum_page:
                 self.stdout.write(self.style.SUCCESS("Successfully finished scraping all pages"))
                 break
-
-        # Export to Database [DEPRECATED!]
-        try:
-            total_rows = Entries.objects.all().count()
-            Entries.objects.all().delete()
-            self.stdout.write(self.style.SUCCESS("{total_rows} rows of existing data has been purged".format(total_rows=total_rows)))
-            try:
-                Entries.objects.bulk_create(dblist)
-                total_rows = Entries.objects.all().count()
-                self.stdout.write(self.style.SUCCESS("{total_rows} rows of new data were successfully written to database".format(total_rows=total_rows)))
-            except:
-                raise CommandError('Failed to write scraped data to database!')
-        except:
-            raise CommandError('Failed to access database!')
 
         # Export to Database
         try:
