@@ -1,2 +1,53 @@
 {% extends 'web/base.html' %}
 {% load static %}
+
+{% block body %}
+<div class="container">
+    <h1 class="title">
+        OGEM Planner
+    </h1>
+    <p class="subtitle">
+        No-frills, sortable list updated daily
+    </p>
+    <table id="main-table" class="table is-narrow is-striped">
+        <thead>
+            <tr>
+            <th><abbr title="Host University">Host Uni</abbr></th>
+            <th><abbr title="NTU Course Code">NTU Course</abbr></th>
+            <th><abbr title="NTU Course Title">NTU Title</abbr></th>
+            <th><abbr title="Host Course Code">Host Course</abbr></th>
+            <th><abbr title="Host Course Title">Host Title</abbr></th>
+            <th><abbr title="Sem Last Offered">SLO</abbr></th>
+            <th><abbr title="Status">Status</abbr></th>
+            <th><abbr title="Last Updated">LU</abbr></th>
+            <th><abbr title="Validity">Validity</abbr></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in entries %}
+            <tr>
+                <td>{{ entry.host_uni }}</td>
+                <td>{{ entry.ntu_course_code }}</td>
+                <td>{{ entry.ntu_course_title }}</td>
+                <td>{{ entry.host_course_code }}</td>
+                <td>{{ entry.host_course_title }}</td>
+                <td>{{ entry.sem_last_offered }}</td>
+                <td>{{ entry.status}}</td>
+                <td>{{ entry.last_updated }}</td>
+                <td>{{ entry.validity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#main-table').DataTable();
+} );
+</script>
+{% endblock %}

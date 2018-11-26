@@ -6,9 +6,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    {% block css %}{% endblock %}
 </head>
 
 <body>
@@ -73,6 +73,7 @@
         </div>
     </nav>
     <section class="section">
+        {% block body %}
         <div class="container">
             <h1 class="title">
                 Hello World
@@ -81,7 +82,9 @@
                 My first website with <strong>Bulma</strong>!
             </p>
         </div>
+        {% endblock %}
     </section>
 </body>
-
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+{% block js %}{% endblock %}
 </html>
