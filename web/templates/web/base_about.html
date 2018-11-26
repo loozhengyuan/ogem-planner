@@ -1,0 +1,53 @@
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block css %}
+{% endblock %}
+
+{% block body %}
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-half">
+                    <h1 class="title">
+                        About
+                    </h1>
+                    <p class="is-large is-light">
+                        This project was created to help fellow NBS kiddos to narrow down. The current website on NBS
+                        intranet isn't really user-friendly and I spent some time just to narrow down the Uni.
+                        <br><br>
+                        The database is updated daily at 5am with NBS OGEM's database. While you can almost rely on
+                        this tool to pick which Uni you're interested in, please also conduct your own research to make
+                        your choice.
+                        <br><br>
+                        This tool is stil very very new, so pardon the bugs. If you do encounter any bugs, feel free to
+                        report it in the Github repo.
+                        <br><br>
+                        Have fun!
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://1865916011.rsc.cdn77.org/bulma-tags.js"></script>
+<script>
+    $(document).ready(function () {
+        // Check for click events on the navbar burger icon
+        $(".navbar-burger").click(function () {
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            $(".navbar-burger").toggleClass("is-active");
+            $(".navbar-menu").toggleClass("is-active");
+
+        });
+    });
+</script>
+{% endblock %}
