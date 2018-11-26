@@ -4,18 +4,18 @@ from django.db import models
 class HostUni(models.Model):
     name = models.CharField(max_length=255)
 
-class HostCourse(models.Model):
+class NTUCourse(models.Model):
     code = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
 
-class NTUCourse(models.Model):
+class HostCourse(models.Model):
     code = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
 
 class CourseMatch(models.Model):
     host_uni = models.ForeignKey(HostUni, on_delete=models.CASCADE)
-    host_course = models.ForeignKey(HostCourse, on_delete=models.CASCADE)
     ntu_course = models.ForeignKey(NTUCourse, on_delete=models.CASCADE)
+    host_course = models.ForeignKey(HostCourse, on_delete=models.CASCADE)
     sem_last_offered = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
     last_updated = models.CharField(max_length=255)
