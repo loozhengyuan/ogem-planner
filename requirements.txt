@@ -19,6 +19,8 @@ mccabe==0.6.1
 ntlm-auth==1.2.0
 numpy==1.15.4
 pandas==0.23.4
+psycopg2==2.7.6.1
+psycopg2-binary==2.7.6.1
 pycparser==2.19
 pylint==2.1.1
 pylint-django==2.0.2
