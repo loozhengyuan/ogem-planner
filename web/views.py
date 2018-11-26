@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from .models import Entries
 
 # Create your views here.
 def index(request):
-    return render(request, 'web/base_index.html')
+    entries = Entries.objects.all()
+    return render(request, 'web/base_index.html', {'entries': entries})
