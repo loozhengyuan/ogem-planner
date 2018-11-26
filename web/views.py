@@ -13,9 +13,9 @@ def about(request):
 
 def results(request):
     if request.method == 'POST':
-        queried = [x.strip() for x in request.POST['courses'].split(",")]
-        matches = CourseMatch.objects.filter(ntu_course__code__in=queried).annotate(total_clearable=Count('ntu_course__code')).filter(total_clearable__gte=2)
-        return render(request, 'web/base_results.html', {'matches': matches})
+        queried = [x.strip().upper() for x in request.POST['courses'].split(",")]
+        universities = HostUni.objects.filter(coursematch__ntu_course__code__in=queried).annotate(total_clearable=Count('coursematch')).order_by('-total_clearable')
+        return render(request, 'web/base_results.html', {'universities': universities})
     return redirect(index)
 
 
