@@ -67,6 +67,15 @@
                 {% endfor %}
             </tbody>
         </table>
+            {% else %}
+            <h1 class="title">
+                No results found!
+            </h1>
+            <h5 class="subtitle">
+                Check if you typed the correct course code
+            </h5>
+            {% endif %}
+        </div>
     </div>
 </section>
 {% endblock %}
