@@ -22,19 +22,23 @@
         <div class="container has-text-centered">
             <div class="columns is-mobile is-centered">
                 <div class="column is-half">
-                    <h1 class="title is-1" style="font-family: 'Montserrat', sans-serif;">
-                        I want to clear..
-                    </h1>
-                    <div class="field has-addons">
-                        <p class="control is-expanded">
-                            <input class="input is-medium" type="tags" placeholder="Enter NBS Course Codes" style="font-family: 'Roboto', sans-serif;" value="tag1,tag2">
-                        </p>
-                        <p class="control">
-                            <a class="button is-info is-medium" style="font-family: 'Roboto', sans-serif;">
-                                Search
-                            </a>
-                        </p>
-                    </div>
+                    <form action="{% url 'results' %}" method="POST">
+                        {% csrf_token %}
+                        <h1 class="title is-1" style="font-family: 'Montserrat', sans-serif;">
+                            I want to clear..
+                        </h1>
+                        <div class="field has-addons">
+                            <p class="control is-expanded">
+                                <input class="input is-medium" id="courses" name="courses" placeholder="Enter NBS Course Codes" style="font-family: 'Roboto', sans-serif;"
+                                    value="AB1202, AB3601">
+                            </p>
+                            <p class="control">
+                                <button type="submit" class="button is-info is-medium" style="font-family: 'Roboto', sans-serif;">
+                                    Search
+                                </button>
+                            </p>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -49,13 +53,13 @@
 <script>
     $(document).ready(function () {
         $('#main-table').DataTable();
-        
-        // Check for click events on the navbar burger icon
-        $(".navbar-burger").click(function() {
 
-        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-        $(".navbar-burger").toggleClass("is-active");
-        $(".navbar-menu").toggleClass("is-active");
+        // Check for click events on the navbar burger icon
+        $(".navbar-burger").click(function () {
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            $(".navbar-burger").toggleClass("is-active");
+            $(".navbar-menu").toggleClass("is-active");
 
         });
     });
