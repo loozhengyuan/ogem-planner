@@ -1,53 +1,108 @@
 {% extends 'web/base.html' %}
 {% load static %}
 
+{% block css %}
+<style>
+    .header-image {
+        background-image: url("https://images.unsplash.com/photo-1506606401543-2e73709cebb4?ixlib=rb-0.3.5&s=f39ed3f2a0d29246044b36acdd254460&auto=format&fit=crop&w=1350&q=80");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: rgba(0, 0, 0, 0);
+    }
+</style>
+{% endblock %}
+
 {% block body %}
-<div class="container">
-    <h1 class="title">
-        OGEM Planner
-    </h1>
-    <p class="subtitle">
-        No-frills, sortable list updated daily
-    </p>
-    <table id="main-table" class="table is-narrow is-striped">
-        <thead>
-            <tr>
-            <th><abbr title="Host University">Host Uni</abbr></th>
-            <th><abbr title="NTU Course Code">NTU Course</abbr></th>
-            <th><abbr title="NTU Course Title">NTU Title</abbr></th>
-            <th><abbr title="Host Course Code">Host Course</abbr></th>
-            <th><abbr title="Host Course Title">Host Title</abbr></th>
-            <th><abbr title="Sem Last Offered">SLO</abbr></th>
-            <th><abbr title="Status">Status</abbr></th>
-            <th><abbr title="Last Updated">LU</abbr></th>
-            <th><abbr title="Validity">Validity</abbr></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entry in entries %}
-            <tr>
-                <td>{{ entry.host_uni }}</td>
-                <td>{{ entry.ntu_course_code }}</td>
-                <td>{{ entry.ntu_course_title }}</td>
-                <td>{{ entry.host_course_code }}</td>
-                <td>{{ entry.host_course_title }}</td>
-                <td>{{ entry.sem_last_offered }}</td>
-                <td>{{ entry.status}}</td>
-                <td>{{ entry.last_updated }}</td>
-                <td>{{ entry.validity }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<section class="hero is-primary is-fullheight header-image">
+    <!-- Hero head: will stick at the top -->
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item">
+                        <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo">
+                    </a>
+                    <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </div>
+                <div id="navbarMenuHeroA" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a class="navbar-item is-active">
+                            Home
+                        </a>
+                        <a class="navbar-item">
+                            Examples
+                        </a>
+                        <a class="navbar-item">
+                            Documentation
+                        </a>
+                        <span class="navbar-item">
+                            <a class="button is-primary is-inverted">
+                                <span class="icon">
+                                    <i class="fab fa-github"></i>
+                                </span>
+                                <span>Download</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Hero content: will be in the middle -->
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="columns is-mobile is-centered">
+                <div class="column is-half">
+                    <h1 class="title is-1" style="font-family: 'Montserrat', sans-serif;">
+                        I want to clear..
+                    </h1>
+                    <div class="field has-addons">
+                        <p class="control is-expanded">
+                            <input class="input is-medium" type="tags" placeholder="Enter NBS Course Codes" style="font-family: 'Roboto', sans-serif;" value="tag1,tag2">
+                        </p>
+                        <p class="control">
+                            <a class="button is-info is-medium" style="font-family: 'Roboto', sans-serif;">
+                                Search
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero footer: will stick at the bottom -->
+    <div class="hero-foot">
+        <nav class="tabs">
+            <div class="container">
+                <ul>
+                    <li class="is-active"><a>Overview</a></li>
+                    <li><a>Modifiers</a></li>
+                    <li><a>Grid</a></li>
+                    <li><a>Elements</a></li>
+                    <li><a>Components</a></li>
+                    <li><a>Layout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</section>
 {% endblock %}
 
 {% block js %}
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://1865916011.rsc.cdn77.org/bulma-tags.js"></script>
 <script>
-$(document).ready(function() {
-    $('#main-table').DataTable();
-} );
+    $(document).ready(function () {
+        $('#main-table').DataTable();
+    });
 </script>
 {% endblock %}
