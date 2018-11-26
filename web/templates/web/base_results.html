@@ -44,29 +44,44 @@
     </div>
 </section>
 
-<section>
-    <div class="container">
-        <h1>List of Universities:</h1>
-        <table class="table is-narrow is-striped">
-            <thead>
-                <tr>
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <div class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <!-- Any other Bulma elements you want -->
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+            {% if universities %}
+            <h1 class="title">
+                Search Results
+            </h1>
+            <h5 class="subtitle">
+                Matches may be inaccurate, click on the Info button to learn more
+            </h5>
+            <table class="table is-narrow is-striped">
+                <thead>
+                    <tr>
                         <th><abbr title="Rank">Rank</abbr></th>
-                    <th><abbr title="Host University">Host Uni</abbr></th>
+                        <th><abbr title="Host University">Host Uni</abbr></th>
                         <th><abbr title="Total Clearable">Total Matches</abbr></th>
                         <th><abbr title="Additional Info">Info</abbr></th>
-                </tr>
-            </thead>
-            <tbody>
+                    </tr>
+                </thead>
+                <tbody>
                     {% for uni in universities %}
-                <tr>
+                    <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ uni.name }}</td>
                         <td>{{ uni.total_clearable }}</td>
                         <td><a href="{% url 'hostuni' uni.id %}">Link</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
             {% else %}
             <h1 class="title">
                 No results found!
