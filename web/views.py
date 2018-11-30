@@ -19,10 +19,10 @@ def results(request):
     return redirect(index)
 
 
-def hostuni(request, hostuni_id):
+def hostuni(request, hostuni_uuid):
     if request.method == 'POST':
         pass
-    host_uni = get_object_or_404(HostUni, pk=hostuni_id)
+    host_uni = get_object_or_404(HostUni, uuid=hostuni_uuid)
     matches = CourseMatch.objects.filter(host_uni=host_uni)
     return render(request, 'web/base_hostuni.html', {'host_uni': host_uni,
                                                         'matches': matches})
