@@ -94,9 +94,14 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# Project-specific settings
-.vscode
+# ---> VisualStudioCode
 .vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Project-specific settings
 credentials.py
 config.ini
 *.csv
