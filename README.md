@@ -1,11 +1,11 @@
 # OGEM Planner
-This project was created to help fellow NBS kiddos to narrow down. The current website on NBS intranet isn't really user-friendly and I spent some time just to narrow down the Uni. 
+This project was created to help fellow NBS students to find host universities that matches the modules they want to clear on exchange, something that is lacking in NBS exchange site. The database is updated daily to keep in sync with NBS's site. 
 
-The database is updated daily at 5am with NBS OGEM's database. While you can almost rely on this tool to pick which Uni you're interested in, please also conduct your own research to make your choice. 
+This site takes no responsibility for any repercussions as a result of relying on any information of this site. Please double-check with NBS Exchange site to make sure. 
 
-This tool is still very very new, so pardon the bugs. If you do encounter any bugs, feel free to report it in the Github repo. 
+This tool is still very very new, so pardon the bugs. If you do encounter any, please feel free to to create an issue in the Github repo. 
 
-Have fun!
+Thanks!
 
 Demo Page: [https://ogem.zhengyuan.me](https://ogem.zhengyuan.me)
 
