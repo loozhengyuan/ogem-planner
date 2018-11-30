@@ -4,7 +4,8 @@ from .models import HostUni, HostCourse, NTUCourse, CourseMatch
 
 # Create your views here.
 def index(request):
-    return render(request, 'web/base_index.html')
+    courses = NTUCourse.objects.distinct().order_by('code')
+    return render(request, 'web/base_index.html', {'courses': courses})
 
 
 def about(request):
@@ -13,9 +14,11 @@ def about(request):
 
 def results(request):
     if request.method == 'POST':
+        courses = NTUCourse.objects.distinct().order_by('code')
         queried = [x.strip().upper() for x in request.POST['courses'].split(",")]
         universities = HostUni.objects.filter(coursematch__ntu_course__code__in=queried).annotate(total_clearable=Count('coursematch')).order_by('-total_clearable')
-        return render(request, 'web/base_results.html', {'universities': universities})
+        return render(request, 'web/base_results.html', {'universities': universities,
+                                                         'courses': courses})
     return redirect(index)
 
 
