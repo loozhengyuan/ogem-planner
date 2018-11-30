@@ -2,20 +2,25 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Roboto">
 {% endblock %}
 
 {% block body %}
 <section class="hero">
     <div class="hero-body">
         <div class="container">
+            <div class="columns">
+                <div class="column">
             <h1 class="title">
                 {{ host_uni.name }}
             </h1>
             <h5 class="subtitle">
                 University Information
             </h5>
-            <table class="table is-narrow is-striped">
+                </div>
+            </div>
+
+            <br>
+            <table class="table is-narrow is-striped is-hoverable">
                 <thead>
                     <tr>
                         <th><abbr title="Number">#</abbr></th>
@@ -48,22 +53,7 @@
         </div>
     </div>
 </section>
-
 {% endblock %}
 
 {% block js %}
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://1865916011.rsc.cdn77.org/bulma-tags.js"></script>
-<script>
-    $(document).ready(function () {
-        // Check for click events on the navbar burger icon
-        $(".navbar-burger").click(function () {
-
-            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-            $(".navbar-burger").toggleClass("is-active");
-            $(".navbar-menu").toggleClass("is-active");
-
-        });
-    });
-</script>
 {% endblock %}

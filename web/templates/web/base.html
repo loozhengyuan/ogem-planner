@@ -8,58 +8,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Roboto">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     {% block css %}{% endblock %}
 </head>
 
 <body>
-    <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
-        <div class="container">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="{% url 'index' %}">
-                    <p class="title">
-                        <strong>OGEM Planner</strong>
-                    </p>
-                </a>
-
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-
-            <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start">
-                    <a class="navbar-item" href="{% url 'index' %}">
-                        Home
-                    </a>
-
-                    <a class="navbar-item" href="{% url 'about' %}">
-                        About
-                    </a>
-                </div>
-
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <div class="buttons">
-                            <a class="button is-primary" href="https://github.com/loozhengyuan/ogem-planner">
-                                <span class="icon">
-                                    <i class="fab fa-github"></i>
-                                </span>
-                                <span>
-                                    <strong>View on Github</strong>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-    {% block body %}{% endblock %}
+    {% block body %}
+    {% endblock %}
 </body>
-<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-{% block js %}{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function () {
+        // Check for click events on the navbar burger icon
+        $(".navbar-burger").click(function () {
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            $(".navbar-burger").toggleClass("is-active");
+            $(".navbar-menu").toggleClass("is-active");
+
+        });
+    });
+</script>
+{% endblock %}
 
 </html>

@@ -5,7 +5,46 @@
 {% endblock %}
 
 {% block body %}
-<section class="hero">
+<section class="hero is-info is-medium is-fullheight is-bold">
+    <!-- Hero head: will stick at the top -->
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="{% url 'index' %}">
+                        <h1 class="title">
+                            OGEM Planner
+                        </h1>
+                    </a>
+                    <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </div>
+                <div id="navbarMenuHeroA" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a class="navbar-item" href="{% url 'index' %}">
+                            Home
+                        </a>
+                        <a class="navbar-item" href="{% url 'about' %}">
+                            About
+                        </a>
+                        <span class="navbar-item">
+                            <a class="button is-light" href="https://github.com/loozhengyuan/ogem-planner">
+                                <span class="icon">
+                                    <i class="fab fa-github"></i>
+                                </span>
+                                <span>View on Github</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Hero content: will be in the middle -->
     <div class="hero-body">
         <div class="container">
             <div class="columns">
@@ -28,26 +67,10 @@
                     </p>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
-
 {% endblock %}
 
 {% block js %}
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://1865916011.rsc.cdn77.org/bulma-tags.js"></script>
-<script>
-    $(document).ready(function () {
-        // Check for click events on the navbar burger icon
-        $(".navbar-burger").click(function () {
-
-            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-            $(".navbar-burger").toggleClass("is-active");
-            $(".navbar-menu").toggleClass("is-active");
-
-        });
-    });
-</script>
 {% endblock %}

@@ -15,7 +15,45 @@
 {% endblock %}
 
 {% block body %}
-<section class="hero is-primary is-fullheight-with-navbar header-image">
+<section class="hero is-info is-medium is-fullheight is-bold">
+    <!-- Hero head: will stick at the top -->
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="{% url 'index' %}">
+                        <h1 class="title">
+                            OGEM Planner
+                        </h1>
+                    </a>
+                    <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </div>
+                <div id="navbarMenuHeroA" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a class="navbar-item" href="{% url 'index' %}">
+                            Home
+                        </a>
+                        <a class="navbar-item" href="{% url 'about' %}">
+                            About
+                        </a>
+                        <span class="navbar-item">
+                            <a class="button is-light" href="https://github.com/loozhengyuan/ogem-planner">
+                                <span class="icon">
+                                    <i class="fab fa-github"></i>
+                                </span>
+                                <span>View on Github</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
     <!-- Hero content: will be in the middle -->
     <div class="hero-body">
         <div class="container has-text-centered">
@@ -23,16 +61,15 @@
                 <div class="column is-half-desktop is-three-quarters-tablet">
                     <form action="{% url 'results' %}" method="POST">
                         {% csrf_token %}
-                        <h1 class="title is-1" style="font-family: 'Montserrat', sans-serif;">
+                        <h1 class="title is-1">
                             I want to clear..
                         </h1>
                         <div class="field has-addons">
                             <p class="control is-expanded">
-                                <input class="input is-medium" id="courses" name="courses" placeholder="Enter NBS Course Codes (comma-seperated)"
-                                    style="font-family: 'Roboto' , sans-serif;">
+                                <input class="input is-medium" id="courses" name="courses" placeholder="Enter NBS Course Codes (comma-separated)">
                             </p>
                             <p class="control">
-                                <button type="submit" class="button is-info is-medium" style="font-family: 'Roboto', sans-serif;">
+                                <button type="submit" class="button is-light is-medium">
                                     Search
                                 </button>
                             </p>
