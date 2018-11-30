@@ -102,11 +102,8 @@ ENV/
 !.vscode/extensions.json
 
 # Project-specific settings
-credentials.py
-config.ini
-*.csv
-db.sqlite3
 core/settings/production.py
 core/settings/development.py
-web/migrations/*
+**/migrations/
+db.sqlite3
 .DS_Store
