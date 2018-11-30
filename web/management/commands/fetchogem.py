@@ -72,9 +72,6 @@ class Command(BaseCommand):
         # Export to Database
         try:
             total_rows = CourseMatch.objects.all().count()
-            HostUni.objects.all().delete()
-            NTUCourse.objects.all().delete()
-            HostCourse.objects.all().delete()
             CourseMatch.objects.all().delete()
             self.stdout.write(self.style.SUCCESS("{total_rows} rows of existing data has been purged".format(total_rows=total_rows)))
             try:
