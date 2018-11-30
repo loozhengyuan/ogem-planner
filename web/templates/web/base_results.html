@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block css %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
     .header-image {
         background-image: url("https://images.unsplash.com/photo-1506606401543-2e73709cebb4?ixlib=rb-0.3.5&s=f39ed3f2a0d29246044b36acdd254460&auto=format&fit=crop&w=1350&q=80");
@@ -16,70 +17,70 @@
 
 {% block body %}
 <section class="hero is-info is-medium is-bold">
-        <!-- Hero head: will stick at the top -->
-        <div class="hero-head">
-            <nav class="navbar">
-                <div class="container">
-                    <div class="navbar-brand">
-                        <a class="navbar-item" href="{% url 'index' %}">
-                            <h1 class="title">
-                                OGEM Planner
-                            </h1>
-                        </a>
-                        <span class="navbar-burger burger" data-target="navbarMenuHeroA">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </span>
-                    </div>
-                    <div id="navbarMenuHeroA" class="navbar-menu">
-                        <div class="navbar-end">
-                            <a class="navbar-item" href="{% url 'index' %}">
-                                Home
-                            </a>
-                            <a class="navbar-item" href="{% url 'about' %}">
-                                About
-                            </a>
-                            <span class="navbar-item">
-                                <a class="button is-light">
-                                    <span class="icon">
-                                        <i class="fab fa-github"></i>
-                                    </span>
-                                    <span>View on Github</span>
-                                </a>
-                            </span>
-                        </div>
-                    </div>
+    <!-- Hero head: will stick at the top -->
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="{% url 'index' %}">
+                        <h1 class="title">
+                            OGEM Planner
+                        </h1>
+                    </a>
+                    <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
                 </div>
-            </nav>
-        </div>
-
-        <!-- Hero content: will be in the middle -->
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                <div class="columns is-mobile is-centered">
-                    <div class="column is-half-desktop is-three-quarters-tablet">
-                        <form action="{% url 'results' %}" method="POST">
-                            {% csrf_token %}
-                            <h1 class="title is-1">
-                                I want to clear..
-                            </h1>
-                            <div class="field has-addons">
-                                <p class="control is-expanded">
-                                    <input class="input is-medium" id="courses" name="courses" placeholder="Enter NBS Course Codes (comma-separated)">
-                                </p>
-                                <p class="control">
-                                    <button type="submit" class="button is-light is-medium">
-                                        Search
-                                    </button>
-                                </p>
-                            </div>
-                        </form>
+                <div id="navbarMenuHeroA" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a class="navbar-item" href="{% url 'index' %}">
+                            Home
+                        </a>
+                        <a class="navbar-item" href="{% url 'about' %}">
+                            About
+                        </a>
+                        <span class="navbar-item">
+                            <a class="button is-light">
+                                <span class="icon">
+                                    <i class="fab fa-github"></i>
+                                </span>
+                                <span>View on Github</span>
+                            </a>
+                        </span>
                     </div>
                 </div>
             </div>
+        </nav>
+    </div>
+
+    <!-- Hero content: will be in the middle -->
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="columns is-mobile is-centered">
+                <div class="column is-half-desktop is-three-quarters-tablet">
+                    <form action="{% url 'results' %}" method="POST">
+                        {% csrf_token %}
+                        <h1 class="title is-1">
+                            I want to clear..
+                        </h1>
+                        <div class="field has-addons">
+                            <p class="control is-expanded">
+                                <input class="input is-medium" id="courses" name="courses" placeholder="Enter NBS Course Codes (comma-separated)">
+                            </p>
+                            <p class="control">
+                                <button type="submit" class="button is-light is-medium">
+                                    Search
+                                </button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
 
 <section class="hero">
@@ -133,4 +134,66 @@
 {% endblock %}
 
 {% block js %}
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+
+        // Check for click events on the navbar burger icon
+        $(".navbar-burger").click(function () {
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            $(".navbar-burger").toggleClass("is-active");
+            $(".navbar-menu").toggleClass("is-active");
+
+        });
+    });
+
+    $(function () {
+        var availableTags = [
+            {% for course in courses %}
+            '{{ course.code }}: {{ course.title }}',
+            {% endfor %}
+        ];
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+    function extractLast(term) {
+        return split(term).pop();
+    }
+
+    $("#courses")
+        // don't navigate away from the field on tab when selecting an item
+        .on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB &&
+                $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+        .autocomplete({
+            autoFocus: true,
+            minLength: 0,
+            source: function (request, response) {
+                // delegate back to autocomplete, but extract the last term
+                response($.ui.autocomplete.filter(
+                    availableTags, extractLast(request.term)));
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            select: function (event, ui) {
+                var terms = split(this.value);
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value.slice(0, 6));
+                // add placeholder to get the comma-and-space at the end
+                terms.push("");
+                this.value = terms.join(", ");
+                return false;
+            }
+        });
+    });
+</script>
 {% endblock %}
