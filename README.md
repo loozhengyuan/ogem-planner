@@ -3,7 +3,7 @@ This project was created to help fellow NBS students to find host universities t
 
 This site takes no responsibility for any repercussions as a result of relying on any information of this site. Please double-check with NBS Exchange site to make sure. 
 
-This tool is still very very new, so pardon the bugs. If you do encounter any, please feel free to to create an issue in the Github repo. 
+This tool is still very very new, so pardon the bugs. If you do encounter any, please feel free to create an issue in the Github repo. Thank you!
 
 Thanks!
 
