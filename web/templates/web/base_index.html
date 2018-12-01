@@ -78,21 +78,8 @@ OGEM Planner
 {% endblock %}
 
 {% block js %}
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-    $(document).ready(function () {
-
-        // Check for click events on the navbar burger icon
-        $(".navbar-burger").click(function () {
-
-            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-            $(".navbar-burger").toggleClass("is-active");
-            $(".navbar-menu").toggleClass("is-active");
-
-        });
-    });
-
     $(function () {
         var availableTags = [
             {% for course in courses %}
