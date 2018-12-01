@@ -5,11 +5,5 @@ This site takes no responsibility for any repercussions as a result of relying o
 
 This tool is still very very new, so pardon the bugs. If you do encounter any, please feel free to create an issue in the Github repo. Thank you!
 
-Thanks!
-
 Demo Page: [https://ogem.zhengyuan.me](https://ogem.zhengyuan.me)
-
-## Installation
-
-### Configuration
 
