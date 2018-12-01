@@ -128,6 +128,11 @@
                 response($.ui.autocomplete.filter(
                     availableTags, extractLast(request.term)));
             },
+            open: function (result) {
+                if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+                    $('.ui-autocomplete').off('menufocus hover mouseover');
+                }
+            },
             focus: function () {
                 // prevent value inserted on focus
                 return false;
@@ -142,7 +147,7 @@
                 terms.push("");
                 this.value = terms.join(", ");
                 return false;
-            }
+            },
         });
     });
 </script>
