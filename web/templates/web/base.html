@@ -16,8 +16,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
+
+    <!-- SITE-WIDE CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    
+    <!-- PAGE-SPECIFIC CSS -->
     {% block css %}
     {% endblock %}
 </head>
@@ -27,7 +30,9 @@
     {% endblock %}
 </body>
 
-{% block js %}
+<!-- SITE-WIDE JAVASCRIPT -->
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
         // Check for click events on the navbar burger icon
@@ -40,6 +45,9 @@
         });
     });
 </script>
+
+<!-- PAGE-SPECIFIC JAVASCRIPT -->
+{% block js %}
 {% endblock %}
 
 </html>
