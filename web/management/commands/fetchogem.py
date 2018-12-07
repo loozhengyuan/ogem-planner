@@ -45,7 +45,7 @@ class Command(BaseCommand):
                 break
 
             # Finds the current and maximum pages
-            nav_raw = soup.findAll('p')[6].find('font').text
+            nav_raw = soup.findAll('p')[4].find('font').text
             nav_trimmed = re.sub(r'\r\n\t', ' ', nav_raw)
             nav_parsed = nav_trimmed.split()
             current_page = nav_parsed[1]
