@@ -109,7 +109,13 @@ Results | OGEM Planner
                         <td>{{ forloop.counter }}</td>
                         <td><a href="{% url 'hostuni' uni.uuid %}">{{ uni.name }}</a></td>
                         <td>{{ uni.total_clearable }}</td>
-                        <td></td>
+                        <td>
+                            {% for match in matches %}
+                                {% if match.host_uni.uuid == uni.uuid %}
+                                    {{ match.ntu_course.code }} | {{ match.host_course.code }} | {{ match.sem_last_offered }} <br>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
