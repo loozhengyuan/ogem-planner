@@ -92,7 +92,7 @@ Results | OGEM Planner
                 Search Results
             </h1>
             <h5 class="subtitle">
-                Click on the information link to find out more
+                Click on the Host University for the full list
             </h5>
             <table class="table is-narrow is-striped">
                 <thead>
@@ -107,9 +107,9 @@ Results | OGEM Planner
                     {% for uni in universities %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ uni.name }}</td>
+                        <td><a href="{% url 'hostuni' uni.uuid %}">{{ uni.name }}</a></td>
                         <td>{{ uni.total_clearable }}</td>
-                        <td><a href="{% url 'hostuni' uni.uuid %}">Link</a></td>
+                        <td></td>
                     </tr>
                     {% endfor %}
                 </tbody>
