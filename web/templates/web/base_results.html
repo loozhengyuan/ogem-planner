@@ -128,6 +128,11 @@ Results | OGEM Planner
                 Check if you typed the correct course code
             </h5>
             {% endif %}
+            <div class="content">
+                {% with matches|first as timestamp %}
+                    <p class="has-text-grey">Last updated on {{ timestamp.modified }}</p>
+                {% endwith %}
+            </div>
         </div>
     </div>
 </section>
