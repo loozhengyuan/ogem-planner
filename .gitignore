@@ -104,6 +104,7 @@ ENV/
 # Project-specific settings
 core/settings/production.py
 core/settings/development.py
-**/migrations/
+**/migrations/*
+!**/migrations/__init__.py
 db.sqlite3
 .DS_Store
