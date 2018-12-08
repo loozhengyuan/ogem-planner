@@ -95,32 +95,32 @@ Results | OGEM Planner
                 Click on the Host University for the full list
             </h5>
             <div class="table-container">
-            <table class="table is-narrow is-striped">
-                <thead>
-                    <tr>
-                        <th><abbr title="Rank">Rank</abbr></th>
-                        <th><abbr title="Host University">Host Uni</abbr></th>
-                        <th><abbr title="Total Clearable">Total Matches</abbr></th>
-                        <th><abbr title="Additional Info">Info</abbr></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for uni in universities %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td><a href="{% url 'hostuni' uni.uuid %}">{{ uni.name }}</a></td>
-                        <td>{{ uni.total_clearable }}</td>
-                        <td>
-                            {% for match in matches %}
-                                {% if match.host_uni.uuid == uni.uuid %}
-                                    {{ match.ntu_course.code }} | {{ match.host_course.code }} | {{ match.sem_last_offered }} <br>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                <table class="table is-narrow is-striped">
+                    <thead>
+                        <tr>
+                            <th><abbr title="Rank">Rank</abbr></th>
+                            <th><abbr title="Host University">Host Uni</abbr></th>
+                            <th><abbr title="Total Clearable">Total Matches</abbr></th>
+                            <th><abbr title="Additional Info">Info</abbr></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for uni in universities %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'hostuni' uni.uuid %}">{{ uni.name }}</a></td>
+                            <td>{{ uni.total_clearable }}</td>
+                            <td>
+                                {% for match in matches %}
+                                    {% if match.host_uni.uuid == uni.uuid %}
+                                        {{ match.ntu_course.code }} | {{ match.host_course.code }} [{{ match.sem_last_offered }}]<br>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
             {% else %}
             <h1 class="title">
