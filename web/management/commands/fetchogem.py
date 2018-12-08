@@ -35,6 +35,7 @@ class Command(BaseCommand):
         s = requests.Session()
 
         while True:
+            # Create a new HTTP request with different parameters
             r = s.post(url, auth=auth, headers=headers, params=payload)
             soup = BeautifulSoup(r.text, features='lxml')
 
