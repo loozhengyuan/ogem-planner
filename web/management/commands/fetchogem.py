@@ -76,6 +76,8 @@ class Command(BaseCommand):
                 break
 
         # Export to Database
+        if len(masterlist) > 1000 and len(masterlist) < 5000:
+            self.stdout.write(self.style.SUCCESS("Verified that scrapped entries are without probable range of 1000-5000 rows."))
         try:
             total_rows = CourseMatch.objects.all().count()
             CourseMatch.objects.all().delete()
@@ -101,3 +103,5 @@ class Command(BaseCommand):
                 raise CommandError('Failed to write scraped data to database!')
         except:
             raise CommandError('Failed to access database!')
+        else:
+            raise CommandError('Scrapped entries is NOT in probable range of 1000-5000 rows. No database changes made.')
