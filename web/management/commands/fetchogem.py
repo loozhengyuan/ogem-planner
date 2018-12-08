@@ -57,12 +57,15 @@ class Command(BaseCommand):
                 raise CommandError('Failed to derive to correct pagination when crawling!')
 
             # Appending scraped data to list format
+            try:
             for table in soup.findAll('table', class_='tablecolor text'):
                 for row in table.findAll('tr')[1:]:
                     rowentry = []
                     for data in row.findAll('td'):
                         rowentry.append(data.text)
                     masterlist.append(rowentry)
+            except:
+                raise CommandError('Failed to derive data entries when crawling!')
 
             # Increasing page param for next loop
             payload['page'] = str(int(current_page) + 1)
