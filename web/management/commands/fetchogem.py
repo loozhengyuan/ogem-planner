@@ -46,24 +46,24 @@ class Command(BaseCommand):
 
             # Finds the current and maximum pages
             try:
-            nav_raw = soup.findAll('p')[4].find('font').text
-            nav_trimmed = re.sub(r'\r\n\t', ' ', nav_raw)
-            nav_parsed = nav_trimmed.split()
-            current_page = nav_parsed[1]
-            maximum_page = nav_parsed[3]
-            self.stdout.write("Currently scraping page {} of {}".format(
-                current_page, maximum_page))
+                nav_raw = soup.findAll('p')[4].find('font').text
+                nav_trimmed = re.sub(r'\r\n\t', ' ', nav_raw)
+                nav_parsed = nav_trimmed.split()
+                current_page = nav_parsed[1]
+                maximum_page = nav_parsed[3]
+                self.stdout.write("Currently scraping page {} of {}".format(
+                    current_page, maximum_page))
             except:
                 raise CommandError('Failed to derive to correct pagination when crawling!')
 
             # Appending scraped data to list format
             try:
-            for table in soup.findAll('table', class_='tablecolor text'):
-                for row in table.findAll('tr')[1:]:
-                    rowentry = []
-                    for data in row.findAll('td'):
-                        rowentry.append(data.text)
-                    masterlist.append(rowentry)
+                for table in soup.findAll('table', class_='tablecolor text'):
+                    for row in table.findAll('tr')[1:]:
+                        rowentry = []
+                        for data in row.findAll('td'):
+                            rowentry.append(data.text)
+                        masterlist.append(rowentry)
             except:
                 raise CommandError('Failed to derive data entries when crawling!')
 
@@ -72,36 +72,36 @@ class Command(BaseCommand):
 
             # Breaking loop if at final page
             if current_page == maximum_page:
-                self.stdout.write(self.style.SUCCESS("Successfully finished scraping all pages"))
+                self.stdout.write(self.style.SUCCESS("Successfully finished scraping all pages."))
                 break
 
         # Export to Database
         if len(masterlist) > 1000 and len(masterlist) < 5000:
-            self.stdout.write(self.style.SUCCESS("Verified that scrapped entries are without probable range of 1000-5000 rows."))
-        try:
-            total_rows = CourseMatch.objects.all().count()
-            CourseMatch.objects.all().delete()
-            self.stdout.write(self.style.SUCCESS("{total_rows} rows of existing data has been purged".format(total_rows=total_rows)))
+            self.stdout.write(self.style.SUCCESS("Verified that scrapped entries are within probable range of 1000-5000 rows."))
             try:
-                for entry in masterlist:
-                    host_uni, created = HostUni.objects.get_or_create(name=entry[0])
-                    ntu_course, created = NTUCourse.objects.get_or_create(code=entry[1], title=entry[2])
-                    host_course, created = HostCourse.objects.get_or_create(code=entry[3], title=entry[4])
-                    course_match = CourseMatch.objects.create(
-                        host_uni=host_uni,
-                        ntu_course=ntu_course,
-                        host_course=host_course,
-                        sem_last_offered=entry[5],
-                        status=entry[6],
-                        last_updated=entry[7],
-                        validity=entry[8],
-                    )
-                    course_match.save()
                 total_rows = CourseMatch.objects.all().count()
-                self.stdout.write(self.style.SUCCESS("{total_rows} rows of new data were successfully written to database".format(total_rows=total_rows)))
+                CourseMatch.objects.all().delete()
+                self.stdout.write(self.style.SUCCESS("{total_rows} rows of existing data has been purged".format(total_rows=total_rows)))
+                try:
+                    for entry in masterlist:
+                        host_uni, created = HostUni.objects.get_or_create(name=entry[0])
+                        ntu_course, created = NTUCourse.objects.get_or_create(code=entry[1], title=entry[2])
+                        host_course, created = HostCourse.objects.get_or_create(code=entry[3], title=entry[4])
+                        course_match = CourseMatch.objects.create(
+                            host_uni=host_uni,
+                            ntu_course=ntu_course,
+                            host_course=host_course,
+                            sem_last_offered=entry[5],
+                            status=entry[6],
+                            last_updated=entry[7],
+                            validity=entry[8],
+                        )
+                        course_match.save()
+                    total_rows = CourseMatch.objects.all().count()
+                    self.stdout.write(self.style.SUCCESS("{total_rows} rows of new data were successfully written to database".format(total_rows=total_rows)))
+                except:
+                    raise CommandError('Failed to write scraped data to database!')
             except:
-                raise CommandError('Failed to write scraped data to database!')
-        except:
-            raise CommandError('Failed to access database!')
+                raise CommandError('Failed to access database!')
         else:
             raise CommandError('Scrapped entries is NOT in probable range of 1000-5000 rows. No database changes made.')
