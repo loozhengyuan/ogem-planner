@@ -43,7 +43,6 @@ class Command(BaseCommand):
             if r.status_code != 200:
                 raise CommandError('Page returned {status_code}! This could be due to wrong credentials or faulty link.'.format(
                     status_code=r.status_code))
-                break
 
             # Finds the current and maximum pages
             nav_raw = soup.findAll('p')[4].find('font').text
