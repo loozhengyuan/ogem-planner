@@ -45,6 +45,7 @@ class Command(BaseCommand):
                     status_code=r.status_code))
 
             # Finds the current and maximum pages
+            try:
             nav_raw = soup.findAll('p')[4].find('font').text
             nav_trimmed = re.sub(r'\r\n\t', ' ', nav_raw)
             nav_parsed = nav_trimmed.split()
@@ -52,6 +53,8 @@ class Command(BaseCommand):
             maximum_page = nav_parsed[3]
             self.stdout.write("Currently scraping page {} of {}".format(
                 current_page, maximum_page))
+            except:
+                raise CommandError('Failed to derive to correct pagination when crawling!')
 
             # Appending scraped data to list format
             for table in soup.findAll('table', class_='tablecolor text'):
