@@ -87,9 +87,23 @@ class Command(BaseCommand):
                         # Get or create HostUni entry
                         host_uni, created = HostUni.objects.get_or_create(name=entry[0])
                         # Get or create NTUCourse entry
-                        ntu_course, created = NTUCourse.objects.get_or_create(code=entry[1], title=entry[2])
+                        try:
+                            ntu_course = NTUCourse.objects.get(code=entry[1])
+                        except NTUCourse.MultipleObjectsReturned:
+                            self.stdout.write(self.style.WARNING("Multiple objects were detected for {code}. Associating with latest entry.".format(code=entry[1])))
+                            ntu_course = NTUCourse.objects.filter(code=entry[1]).last()
+                        except NTUCourse.DoesNotExist:
+                            self.stdout.write(self.style.NOTICE("{code} not found in database. Creating a new entry for {code}.".format(code=entry[1])))
+                            ntu_course = NTUCourse.objects.create(code=entry[1], title=entry[2])
                         # Get or create HostCourse entry
-                        host_course, created = HostCourse.objects.get_or_create(code=entry[3], title=entry[4])
+                        try:
+                            host_course = HostCourse.objects.get(code=entry[3])
+                        except HostCourse.MultipleObjectsReturned:
+                            self.stdout.write(self.style.WARNING("Multiple objects were detected for {code}. Associating with latest entry.".format(code=entry[3])))
+                            host_course = HostCourse.objects.filter(code=entry[3]).last()
+                        except HostCourse.DoesNotExist:
+                            self.stdout.write(self.style.NOTICE("{code} not found in database. Creating a new entry for {code}.".format(code=entry[3])))
+                            host_course = HostCourse.objects.create(code=entry[3], title=entry[4])
                         # Create CourseMatch entries
                         course_match = CourseMatch.objects.create(
                             host_uni=host_uni,
