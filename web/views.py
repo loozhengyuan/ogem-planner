@@ -17,7 +17,7 @@ def results(request):
         courses = NTUCourse.objects.distinct().order_by('code')
         queried = [x.strip().upper() for x in request.POST['courses'].split(",")]
         matches = CourseMatch.objects.filter(ntu_course__code__in=queried)
-        universities = HostUni.objects.filter(coursematch__ntu_course__code__in=queried).annotate(total_clearable=Count('coursematch__ntu_course__code'), unique_clearable=Count('coursematch__ntu_course__code', distinct=True)).order_by('-total_clearable')
+        universities = HostUni.objects.filter(coursematch__ntu_course__code__in=queried).annotate(total_clearable=Count('coursematch__ntu_course__code'), unique_clearable=Count('coursematch__ntu_course__code', distinct=True)).order_by('-unique_clearable', '-total_clearable')
         return render(request, 'web/base_results.html', {'universities': universities,
                                                          'courses': courses,
                                                          'matches': matches,})
