@@ -84,19 +84,51 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS("{total_rows} rows of existing data has been purged".format(total_rows=total_rows)))
                 try:
                     for entry in masterlist:
-                        host_uni, created = HostUni.objects.get_or_create(name=entry[0])
-                        ntu_course, created = NTUCourse.objects.get_or_create(code=entry[1], title=entry[2])
-                        host_course, created = HostCourse.objects.get_or_create(code=entry[3], title=entry[4])
-                        course_match = CourseMatch.objects.create(
-                            host_uni=host_uni,
-                            ntu_course=ntu_course,
-                            host_course=host_course,
-                            sem_last_offered=entry[5],
-                            status=entry[6],
-                            last_updated=entry[7],
-                            validity=entry[8],
-                        )
-                        course_match.save()
+                        
+                        # Get or create HostUni entry
+                        try:
+                            host_uni, created = HostUni.objects.get_or_create(name=entry[0])
+                        except:
+                            raise CommandError('Failed to get or create HostUni entry!')
+                        
+                        # Get or create NTUCourse entry
+                        try:
+                            ntu_course = NTUCourse.objects.get(code=entry[1])
+                        except NTUCourse.MultipleObjectsReturned:
+                            self.stdout.write(self.style.WARNING("Multiple objects were detected for {code}. Associating with latest entry.".format(code=entry[1])))
+                            ntu_course = NTUCourse.objects.filter(code=entry[1]).last()
+                        except NTUCourse.DoesNotExist:
+                            self.stdout.write("{code} not found in database. Creating a new entry for {code}.".format(code=entry[1]))
+                            ntu_course = NTUCourse.objects.create(code=entry[1], title=entry[2])
+                        except:
+                            raise CommandError('Failed to get or create NTUCourse entry!')
+                        
+                        # Get or create HostCourse entry
+                        try:
+                            host_course = HostCourse.objects.get(code=entry[3])
+                        except HostCourse.MultipleObjectsReturned:
+                            self.stdout.write(self.style.WARNING("Multiple objects were detected for {code}. Associating with latest entry.".format(code=entry[3])))
+                            host_course = HostCourse.objects.filter(code=entry[3]).last()
+                        except HostCourse.DoesNotExist:
+                            self.stdout.write("{code} not found in database. Creating a new entry for {code}.".format(code=entry[3]))
+                            host_course = HostCourse.objects.create(code=entry[3], title=entry[4])
+                        except:
+                            raise CommandError('Failed to get or create HostCourse entry!')
+                        
+                        # Create CourseMatch entries
+                        try:
+                            course_match = CourseMatch.objects.create(
+                                host_uni=host_uni,
+                                ntu_course=ntu_course,
+                                host_course=host_course,
+                                sem_last_offered=entry[5],
+                                status=entry[6],
+                                last_updated=entry[7],
+                                validity=entry[8],
+                            )
+                        except:
+                            raise CommandError('Failed to create CourseMatch entry!')
+                    
                     total_rows = CourseMatch.objects.all().count()
                     self.stdout.write(self.style.SUCCESS("{total_rows} rows of new data were successfully written to database".format(total_rows=total_rows)))
                 except:
