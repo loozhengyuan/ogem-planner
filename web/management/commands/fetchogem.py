@@ -84,11 +84,13 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS("{total_rows} rows of existing data has been purged".format(total_rows=total_rows)))
                 try:
                     for entry in masterlist:
+                        
                         # Get or create HostUni entry
                         try:
                             host_uni, created = HostUni.objects.get_or_create(name=entry[0])
                         except:
                             raise CommandError('Failed to get or create HostUni entry!')
+                        
                         # Get or create NTUCourse entry
                         try:
                             ntu_course = NTUCourse.objects.get(code=entry[1])
@@ -100,6 +102,7 @@ class Command(BaseCommand):
                             ntu_course = NTUCourse.objects.create(code=entry[1], title=entry[2])
                         except:
                             raise CommandError('Failed to get or create NTUCourse entry!')
+                        
                         # Get or create HostCourse entry
                         try:
                             host_course = HostCourse.objects.get(code=entry[3])
@@ -111,6 +114,7 @@ class Command(BaseCommand):
                             host_course = HostCourse.objects.create(code=entry[3], title=entry[4])
                         except:
                             raise CommandError('Failed to get or create HostCourse entry!')
+                        
                         # Create CourseMatch entries
                         try:
                             course_match = CourseMatch.objects.create(
@@ -124,6 +128,7 @@ class Command(BaseCommand):
                             )
                         except:
                             raise CommandError('Failed to create CourseMatch entry!')
+                    
                     total_rows = CourseMatch.objects.all().count()
                     self.stdout.write(self.style.SUCCESS("{total_rows} rows of new data were successfully written to database".format(total_rows=total_rows)))
                 except:
