@@ -84,9 +84,13 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS("{total_rows} rows of existing data has been purged".format(total_rows=total_rows)))
                 try:
                     for entry in masterlist:
+                        # Get or create HostUni entry
                         host_uni, created = HostUni.objects.get_or_create(name=entry[0])
+                        # Get or create NTUCourse entry
                         ntu_course, created = NTUCourse.objects.get_or_create(code=entry[1], title=entry[2])
+                        # Get or create HostCourse entry
                         host_course, created = HostCourse.objects.get_or_create(code=entry[3], title=entry[4])
+                        # Create CourseMatch entries
                         course_match = CourseMatch.objects.create(
                             host_uni=host_uni,
                             ntu_course=ntu_course,
