@@ -98,7 +98,7 @@ class Command(BaseCommand):
                             self.stdout.write(self.style.WARNING("Multiple objects were detected for {code}. Associating with latest entry.".format(code=entry[1])))
                             ntu_course = NTUCourse.objects.filter(code=entry[1]).last()
                         except NTUCourse.DoesNotExist:
-                            self.stdout.write(self.style.NOTICE("{code} not found in database. Creating a new entry for {code}.".format(code=entry[1])))
+                            self.stdout.write("{code} not found in database. Creating a new entry for {code}.".format(code=entry[1]))
                             ntu_course = NTUCourse.objects.create(code=entry[1], title=entry[2])
                         except:
                             raise CommandError('Failed to get or create NTUCourse entry!')
@@ -110,7 +110,7 @@ class Command(BaseCommand):
                             self.stdout.write(self.style.WARNING("Multiple objects were detected for {code}. Associating with latest entry.".format(code=entry[3])))
                             host_course = HostCourse.objects.filter(code=entry[3]).last()
                         except HostCourse.DoesNotExist:
-                            self.stdout.write(self.style.NOTICE("{code} not found in database. Creating a new entry for {code}.".format(code=entry[3])))
+                            self.stdout.write("{code} not found in database. Creating a new entry for {code}.".format(code=entry[3]))
                             host_course = HostCourse.objects.create(code=entry[3], title=entry[4])
                         except:
                             raise CommandError('Failed to get or create HostCourse entry!')
