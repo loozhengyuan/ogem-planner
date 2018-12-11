@@ -104,16 +104,20 @@ class Command(BaseCommand):
                             raise CommandError('Failed to get or create NTUCourse entry!')
                         
                         # Get or create HostCourse entry
-                        try:
-                            host_course = HostCourse.objects.get(code=entry[3])
-                        except HostCourse.MultipleObjectsReturned:
-                            self.stdout.write(self.style.WARNING("Multiple objects were detected for {code}. Associating with latest entry.".format(code=entry[3])))
-                            host_course = HostCourse.objects.filter(code=entry[3]).last()
-                        except HostCourse.DoesNotExist:
-                            self.stdout.write("{code} not found in database. Creating a new entry for {code}.".format(code=entry[3]))
-                            host_course = HostCourse.objects.create(code=entry[3], title=entry[4])
-                        except:
-                            raise CommandError('Failed to get or create HostCourse entry!')
+                        if entry[3] in ['-']:
+                            self.stdout.write("Invalid course code detected. Creating a new entry for {code}:{title} instead.".format(code=entry[3], title=entry[4]))
+                            host_course, created = HostCourse.objects.get_or_create(code=entry[3], title=entry[4])
+                        else:
+                            try:
+                                host_course = HostCourse.objects.get(code=entry[3])
+                            except HostCourse.MultipleObjectsReturned:
+                                self.stdout.write(self.style.WARNING("Multiple objects were detected for {code}. Associating with latest entry.".format(code=entry[3])))
+                                host_course = HostCourse.objects.filter(code=entry[3]).last()
+                            except HostCourse.DoesNotExist:
+                                self.stdout.write("{code} not found in database. Creating a new entry for {code}.".format(code=entry[3]))
+                                host_course = HostCourse.objects.create(code=entry[3], title=entry[4])
+                            except:
+                                raise CommandError('Failed to get or create HostCourse entry!')
                         
                         # Create CourseMatch entries
                         try:
