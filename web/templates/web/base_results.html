@@ -100,7 +100,8 @@ Results | OGEM Planner
                         <tr>
                             <th><abbr title="Rank">Rank</abbr></th>
                             <th><abbr title="Host University">Host Uni</abbr></th>
-                            <th><abbr title="Total Clearable">Total Matches</abbr></th>
+                            <th><abbr title="Total Matches">Total Matches</abbr></th>
+                            <th><abbr title="Unique Matches">Unique Matches</abbr></th>
                             <th><abbr title="Additional Info">Info</abbr></th>
                         </tr>
                     </thead>
@@ -110,6 +111,7 @@ Results | OGEM Planner
                             <td>{{ forloop.counter }}</td>
                             <td><a href="{% url 'hostuni' uni.uuid %}">{{ uni.name }}</a></td>
                             <td>{{ uni.total_clearable }}</td>
+                            <td>{{ uni.unique_clearable }}</td>
                             <td>
                                 {% for match in matches %}
                                     {% if match.host_uni.uuid == uni.uuid %}
