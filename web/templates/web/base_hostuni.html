@@ -51,6 +51,12 @@
                     {% endfor %}
                 </tbody>
             </table>
+
+            <div class="content">
+                {% with matches|first as timestamp %}
+                    <p class="has-text-grey">Last updated on {{ timestamp.modified }}</p>
+                {% endwith %}
+            </div>
         </div>
     </div>
 </section>
