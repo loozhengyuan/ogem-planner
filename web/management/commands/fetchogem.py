@@ -114,7 +114,6 @@ class Command(BaseCommand):
                             last_updated=entry[7],
                             validity=entry[8],
                         )
-                        course_match.save()
                     total_rows = CourseMatch.objects.all().count()
                     self.stdout.write(self.style.SUCCESS("{total_rows} rows of new data were successfully written to database".format(total_rows=total_rows)))
                 except:
