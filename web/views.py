@@ -2,10 +2,23 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Count
 from .models import HostUni, HostCourse, NTUCourse, CourseMatch
 
+approved = [
+        'https://sso.wis.ntu.edu.sg/webexe88/owa/sso.asp',
+        'https://sso.wis.ntu.edu.sg/webexe88/owa/sso_redirect_pc.asp?t=1&app=https://ogem.zhengyuan.me',
+    ]
+
 # Create your views here.
 def index(request):
-    courses = NTUCourse.objects.distinct().order_by('code')
-    return render(request, 'web/base_index.html', {'courses': courses})
+    viewpath = '{scheme}://{host}{path}'.format(scheme=request.scheme, host=request.META['HTTP_HOST'], path=request.path)
+    try:
+        referer = request.META['HTTP_REFERER']
+        if request.META['HTTP_REFERER'] in approved:
+            courses = NTUCourse.objects.distinct().order_by('code')
+            return render(request, 'web/base_index.html', {'courses': courses})
+        else:
+            return redirect('https://sso.wis.ntu.edu.sg/webexe88/owa/sso_redirect_pc.asp?t=1&app=https://ogem.zhengyuan.me')
+    except KeyError:
+        return redirect('https://sso.wis.ntu.edu.sg/webexe88/owa/sso_redirect_pc.asp?t=1&app=https://ogem.zhengyuan.me')
 
 
 def about(request):
