@@ -105,8 +105,9 @@ class Command(BaseCommand):
                         
                         # Get or create HostCourse entry
                         if entry[3] in ['-']:
-                            self.stdout.write("Invalid course code detected. Creating a new entry for {code}:{title} instead.".format(code=entry[3], title=entry[4]))
                             host_course, created = HostCourse.objects.get_or_create(code=entry[3], title=entry[4])
+                            if created:
+                                self.stdout.write("Invalid course code detected. Creating a new entry for {code}:{title} instead.".format(code=entry[3], title=entry[4]))
                         else:
                             try:
                                 host_course = HostCourse.objects.get(code=entry[3])
