@@ -54,7 +54,7 @@ class Command(BaseCommand):
                 self.stdout.write("Currently scraping page {} of {}".format(
                     current_page, maximum_page))
             except:
-                raise CommandError('Failed to derive to correct pagination when crawling!')
+                raise CommandError('Failed to derive correct pagination when crawling!')
 
             # Appending scraped data to list format
             try:
