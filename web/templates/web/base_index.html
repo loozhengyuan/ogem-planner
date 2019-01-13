@@ -83,7 +83,7 @@ OGEM Planner
     $(function () {
         var availableTags = [
             {% for course in courses %}
-            '{{ course.code }}: {{ course.title }}',
+            '{{ course|escapejs }}',
             {% endfor %}
         ];
         function split(val) {
