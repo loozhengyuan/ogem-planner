@@ -13,13 +13,25 @@ class Base(models.Model):
 class HostUni(Base):
     name = models.CharField(max_length=255)
 
+    class Meta:
+        verbose_name = 'host university'
+        verbose_name_plural = 'host universities'
+
 class NTUCourse(Base):
     code = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
 
+    class Meta:
+        verbose_name = 'ntu course'
+        verbose_name_plural = 'ntu courses'
+
 class HostCourse(Base):
     code = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name = 'host course'
+        verbose_name_plural = 'host courses'
 
 class CourseMatch(Base):
     host_uni = models.ForeignKey(HostUni, on_delete=models.CASCADE)
@@ -29,3 +41,7 @@ class CourseMatch(Base):
     status = models.CharField(max_length=255)
     last_updated = models.CharField(max_length=255)
     validity = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name = 'matched course'
+        verbose_name_plural = 'matched courses'
