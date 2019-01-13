@@ -17,6 +17,9 @@ class HostUni(Base):
         verbose_name = 'host university'
         verbose_name_plural = 'host universities'
 
+    def __str__(self):
+        return self.name
+
 class NTUCourse(Base):
     code = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
@@ -25,6 +28,10 @@ class NTUCourse(Base):
         verbose_name = 'ntu course'
         verbose_name_plural = 'ntu courses'
 
+    def __str__(self):
+        return "{self.code}: {self.title}".format(self=self)
+
+
 class HostCourse(Base):
     code = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
@@ -32,6 +39,10 @@ class HostCourse(Base):
     class Meta:
         verbose_name = 'host course'
         verbose_name_plural = 'host courses'
+
+    def __str__(self):
+        return "{self.code}: {self.title}".format(self=self)
+
 
 class CourseMatch(Base):
     host_uni = models.ForeignKey(HostUni, on_delete=models.CASCADE)
